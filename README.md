@@ -53,7 +53,33 @@
 1. Commit & push all branches
 1. Automated tests of dev deployment
 1. Create release branch from master
-1. Merge from dev to release
 1. Automated tests of release deployment
-1. Merge from release to master
 1. Automated tests of prod deployment
+
+## Fork aws_template repo
+
+Creates new project based on aws_template. Follow the installation section above. Usage:
+
+`aws_template/lifecycle/fork_template.sh <new_repo_clone_url>`
+
+new_repo_clone_url - The URL provided for cloning a git repo: https://github.com/<user>/<repo_name>.git
+    
+## Pull most recent aws_template files
+
+Updates the lifecycle scripts with the current versions from aws_template repo. Usage:
+
+`lifecycle/pull_template.sh`
+
+## Create new dev brach from master
+
+Creates a dev branch from master. Usage:
+
+`lifecycle/create_dev.sh <branch_name>`
+
+## Delete branch
+
+Adds "deleted/" prefix to a branch. Deleted branches are permanently removed after 30 days.
+
+## Undelete branch
+
+Removes "deleted/" prefix
