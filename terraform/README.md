@@ -1,1 +1,1 @@
-Put all your terraform files in this folder
+Put all terraform files in this folder.

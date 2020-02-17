@@ -1,1 +1,1 @@
-Put all your lambda functions in this folder.
+Put all lambda functions in this folder.

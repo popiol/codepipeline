@@ -1,1 +1,1 @@
-Put all logs in this folder
+Put all log files in this folder
