@@ -1,15 +1,11 @@
-data "template_file" "init_sh" {
-	template = file("../scripts/init.sh")
-}
-
 data "template_cloudinit_config" "init" {
 	gzip = true
 	base64_encode = true
 
 	part {
-		filename = "init.sh"
+		filename = "kube_init.sh"
 		content_type = "text/x-shellscript"
-		content = data.template_file.init_sh.rendered
+		content = templatefile("../config/kube_init.sh", {vimrc: file("../config/vimrc.local")})
 	}
 }
 
@@ -30,7 +26,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "ec2" {
-	instance_type = "t2.micro"
+	instance_type = "t3.micro"
 	ami = data.aws_ami.ubuntu.id
 	key_name = aws_key_pair.keypair1.key_name
 	subnet_id = aws_subnet.subnet1.id
