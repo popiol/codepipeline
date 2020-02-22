@@ -1,12 +1,14 @@
 #!/bin/bash
 
-cassandra -fR
+cassandra -R
 
-#cqlsh -f cassandra/create-schema.cql
+sleep 10
 
-#cqlsh -f cassandra/insert-data.cql
+cqlsh -f cassandra/create-schema.cql
 
-#cd cassandra/cassandra-crud-rest
+cqlsh -f cassandra/insert-data.cql
 
-#sbt run
+cd cassandra/cassandra-crud-rest
+
+sbt run
 

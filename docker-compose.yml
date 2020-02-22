@@ -1,0 +1,8 @@
+version: '3'
+services:
+  web:
+    image: semantive
+    ports:
+      - "9000:9000"
+    stdin_open: true
+    tty: true
