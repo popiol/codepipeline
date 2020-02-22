@@ -1,5 +1,6 @@
 config.ini
 terraform/terraform.tfstate*
+terraform/config.tfvars
 terraform/.terraform/*
 terraform/lambda/*zip
 logs/*

@@ -5,7 +5,10 @@ data "template_cloudinit_config" "init" {
 	part {
 		filename = "kube_init.sh"
 		content_type = "text/x-shellscript"
-		content = templatefile("../config/kube_init.sh", {vimrc: file("../config/vimrc.local")})
+		content = templatefile("../config/kube_init.sh", {
+			vimrc: file("../config/vimrc.local"),
+			timezone: var.timezone
+		})
 	}
 }
 
@@ -26,7 +29,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "ec2" {
-	instance_type = "t3.micro"
+	instance_type = "t3a.medium"
 	ami = data.aws_ami.ubuntu.id
 	key_name = aws_key_pair.keypair1.key_name
 	subnet_id = aws_subnet.subnet1.id

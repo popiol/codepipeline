@@ -1,8 +1,12 @@
 #!/bin/bash
 
+#set timezone
+
+sudo echo "$timezone" > /etc/timezone
+
 #copy vim config file
 
-sudo echo "$1" > /etc/vim/vimrc.local
+sudo cat "$vimrc" > /etc/vim/vimrc.local
 
 #install kubectl
 

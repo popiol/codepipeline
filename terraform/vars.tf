@@ -22,3 +22,11 @@ variable "ssh_pub_key" {
 	type = string
 }
 
+variable "statefile_bucket" {
+	type = string
+}
+
+variable "timezone" {
+	type = string
+}
+

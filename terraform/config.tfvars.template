@@ -1,0 +1,8 @@
+aws_region="us-east-2"
+ssh_pub_key="~/.ssh/id_rsa.pub"
+app_id="semantive_"
+app="semantive"
+app_ver=""
+tags={"App":"semantive","AppStage":""}
+statefile_bucket=""
+timezone=""
