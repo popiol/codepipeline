@@ -23,6 +23,5 @@ phases:
         commands:
             - docker push 278088188282.dkr.ecr.us-east-2.amazonaws.com/semantive:latest
             #- kubectl apply -f config/cassandra-service.yml
-            #- kubectl create deployment cassandra-test --image=278088188282.dkr.ecr.us-east-2.amazonaws.com/semantive:latest
             - docker-compose up -d
 
