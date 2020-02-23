@@ -1,6 +1,6 @@
 version: '3'
 services:
-  web:
+  cassandra:
     image: 278088188282.dkr.ecr.us-east-2.amazonaws.com/semantive:latest
     ports:
       - "9000:9000"

@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+    install:
+        commands:
+            - curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+            - chmod +x ./kubectl
+            - sudo mv ./kubectl /usr/local/bin/kubectl
+            - sudo apt-get update
+            - sudo apt-get install docker.io -y
+            - curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+            - chmod +x minikube
+            - sudo mv minikube /usr/local/bin/
+            - sudo systemctl enable kubelet.service
+            - sudo minikube start --vm-driver=none
+    pre_build:
+        commands:
+            - $(aws ecr get-login --no-include-email)
+    build:
+        commands:
+            - docker build --tag 278088188282.dkr.ecr.us-east-2.amazonaws.com/semantive:latest .
+    post_build:
+        commands:
+            - docker push 278088188282.dkr.ecr.us-east-2.amazonaws.com/semantive:latest
+            #- kubectl apply -f config/cassandra-service.yml
+            #- kubectl create deployment cassandra-test --image=278088188282.dkr.ecr.us-east-2.amazonaws.com/semantive:latest
+            - docker-compose up -d
+
