@@ -5,14 +5,14 @@ phases:
         commands:
             - curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
             - chmod +x ./kubectl
-            - sudo mv ./kubectl /usr/local/bin/kubectl
-            - sudo apt-get update
-            - sudo apt-get install docker.io -y
+            - mv ./kubectl /usr/local/bin/kubectl
+            - apt-get update
+            - apt-get install docker.io -y
             - curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
             - chmod +x minikube
-            - sudo mv minikube /usr/local/bin/
-            - sudo systemctl enable kubelet.service
-            - sudo minikube start --vm-driver=none
+            - mv minikube /usr/local/bin/
+            - systemctl enable kubelet.service
+            - minikube start --vm-driver=none
     pre_build:
         commands:
             - $(aws ecr get-login --no-include-email)
