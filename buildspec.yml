@@ -2,16 +2,16 @@ version: 0.2
 
 phases:
     install:
-        commands:
-            - apt-get update
-            - apt-get install docker.io -y
+        runtime-versions:
+            docker: 19
     pre_build:
         commands:
-            - $(aws ecr get-login --no-include-email)
+            - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
     build:
         commands:
-            - docker build --tag 278088188282.dkr.ecr.us-east-2.amazonaws.com/semantive:latest .
+            - docker build --tag $IMAGE_REPO_NAME:$IMAGE_TAG .
+            - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
     post_build:
         commands:
-            - docker push 278088188282.dkr.ecr.us-east-2.amazonaws.com/semantive:latest
+            - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
 
