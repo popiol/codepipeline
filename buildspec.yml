@@ -7,6 +7,8 @@ phases:
     pre_build:
         commands:
             - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+            - git submodule init cassandra
+            - git submodule update cassandra
     build:
         commands:
             - docker build --tag $IMAGE_REPO_NAME:$IMAGE_TAG .
