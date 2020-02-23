@@ -3,16 +3,8 @@ version: 0.2
 phases:
     install:
         commands:
-            - curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-            - chmod +x ./kubectl
-            - mv ./kubectl /usr/local/bin/kubectl
             - apt-get update
             - apt-get install docker.io -y
-            - curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-            - chmod +x minikube
-            - mv minikube /usr/local/bin/
-            - systemctl enable kubelet.service
-            - minikube start --vm-driver=none
     pre_build:
         commands:
             - $(aws ecr get-login --no-include-email)
@@ -22,6 +14,4 @@ phases:
     post_build:
         commands:
             - docker push 278088188282.dkr.ecr.us-east-2.amazonaws.com/semantive:latest
-            #- kubectl apply -f config/cassandra-service.yml
-            - docker-compose up -d
 
