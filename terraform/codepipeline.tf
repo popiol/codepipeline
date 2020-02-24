@@ -4,7 +4,7 @@ resource "aws_codepipeline" "main" {
 	tags = var.tags
 
 	artifact_store {
-		location = "codepipeline-${var.aws_region}-83040681529900"
+		location = aws_s3_bucket.codepipeline.bucket
 		type = "S3"
 	}
 
@@ -27,6 +27,10 @@ resource "aws_codepipeline" "main" {
 				OAuthToken = var.github_token
 			}
 		}
+	}
+
+	stage {
+		name = "Build"
 
 		action {
 			name = "Build"
@@ -41,6 +45,10 @@ resource "aws_codepipeline" "main" {
 				ProjectName = var.app_id
 			}
 		}
+	}
+
+	stage {
+		name = "Deploy"
 
 		action {
 			name = "Deploy"

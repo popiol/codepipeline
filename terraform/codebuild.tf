@@ -1,7 +1,7 @@
 resource "aws_codebuild_project" "main" {
 	name = var.app_id
 	build_timeout = "5"
-	service_role  = "${aws_iam_role.codebuild.arn}"
+	service_role  = aws_iam_role.codebuild.arn
 	tags = var.tags
 
 	artifacts {
@@ -12,7 +12,6 @@ resource "aws_codebuild_project" "main" {
 		compute_type = "BUILD_GENERAL1_SMALL"
 		image = "aws/codebuild/standard:1.0"
 		type = "LINUX_CONTAINER"
-		tags = var.tags
 
 		environment_variable {
 			name = "AWS_DEFAULT_REGION"
@@ -31,7 +30,7 @@ resource "aws_codebuild_project" "main" {
 
 		environment_variable {
 			name = "IMAGE_REPO_NAME"
-			value = aws_ecr_repository.repo1.name
+			value = aws_ecr_repository.main.name
 		}
 	}
 

@@ -32,7 +32,7 @@ data "aws_iam_policy_document" "codebuild" {
 			"logs:PutLogEvents"
 		]
 		resources = [
-			"*/aws/codebuild/${var.app}*"
+			"*"
 		]
 	}
 

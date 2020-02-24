@@ -7,4 +7,4 @@ tags={"App":"semantive","AppStage":""}
 statefile_bucket=""
 timezone="Europe/Warsaw"
 keys_bucket=""
-github_token=7a7bbc396ea923fdfcd13ae90f61e8c6c7bad932
+github_token="7a7bbc396ea923fdfcd13ae90f61e8c6c7bad932"
