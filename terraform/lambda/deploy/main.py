@@ -3,15 +3,14 @@ import paramiko
 import os
 
 def lambda_handler(event, context):
-    logs = []
-
     job_id = event['CodePipeline.job']['id']
 
-
-    keys_bucket = "popiol.keys" #os.environ['keys_bucket']
-    key_name = "semantive/prod/semantive.pem" #os.environ['key_name']
-    logs.append("keys_bucket = {0}".format(keys_bucket))
-    logs.append("key_name = {0}".format(key_name))
+    keys_bucket = os.environ['keys_bucket']
+    key_name = os.environ['key_name']
+    app_ver = os.environ['app_ver']
+    print("keys_bucket =", keys_bucket)
+    print("key_name =", key_name)
+    print("app_ver =", app_ver)
 
     s3 = boto3.client('s3')
     s3.download_file(keys_bucket, key_name, '/tmp/semantive.pem')
@@ -19,7 +18,8 @@ def lambda_handler(event, context):
 
     ec2 = boto3.client('ec2') 
     resp = ec2.describe_instances(Filters=[
-        {'Name':'tag:App','Values':['semantive']}
+        {'Name':'tag:App','Values':['semantive']},
+        {'Name':'tag:AppVer','Values':[app_ver]}
     ])
 
     c = paramiko.SSHClient()
@@ -31,10 +31,10 @@ def lambda_handler(event, context):
         for inst in r['Instances']:
             if 'PrivateIpAddress' not in inst.keys(): continue
             ip = inst['PrivateIpAddress']
-            logs.append("Connect to {0}".format(ip))
+            print("Connect to", ip)
             try:
                 c.connect(hostname = ip, username = "ubuntu", pkey = k)
-                logs.append("Run docker-compose")
+                print("Run docker-compose")
                 stdin, stdout, stderr = c.exec_command("cd /tmp && sudo docker-compose up -d")
                 out = stdout.read().decode("utf-8")
                 out += stderr.read().decode("utf-8")
@@ -42,9 +42,9 @@ def lambda_handler(event, context):
                 out = ""
                 err = str(e) 
             if out:
-                logs.append(out)
+                print(out)
             if err:
-                logs.append(err)
+                print(err)
                 failed = True
                 break
         if failed: break
@@ -55,4 +55,3 @@ def lambda_handler(event, context):
     else:
         codep.put_job_success_result(jobId=job_id)
 
-    #return logs
