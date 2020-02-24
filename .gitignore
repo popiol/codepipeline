@@ -6,4 +6,4 @@ terraform/lambda/*zip
 terraform/lambda/*/lib/*
 logs/*
 !logs/README.md
-
+**/__pycache__/*
