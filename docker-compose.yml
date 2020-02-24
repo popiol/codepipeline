@@ -6,3 +6,5 @@ services:
       - "9000:9000"
     stdin_open: true
     tty: true
+    volumes:
+      - "/tmp/secret.key:/app/secret.key"

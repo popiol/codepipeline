@@ -50,3 +50,7 @@ variable "github_repo" {
 	type = string
 }
 
+variable "crud_rest_key" {
+	type = string
+}
+

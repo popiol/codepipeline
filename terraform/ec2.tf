@@ -12,7 +12,8 @@ data "template_cloudinit_config" "init" {
 			aws_region: var.aws_region,
 			aws_account_id: data.aws_caller_identity.current.account_id,
 			image_tag: "latest", 
-			app_id: var.app_id
+			app_id: var.app_id,
+			crud_rest_key: var.crud_rest_key
 		})
 	}
 }

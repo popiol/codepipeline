@@ -25,7 +25,7 @@ COPY . /app
 
 WORKDIR /app
 
-RUN cd cassandra/cassandra-crud-rest &&
+RUN cd cassandra/cassandra-crud-rest && \
 	sbt dist
 
 EXPOSE 9000

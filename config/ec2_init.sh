@@ -14,6 +14,8 @@ cd /tmp
 
 echo "${docker_compose}" > ./docker-compose.yml
 
+echo "${crud_rest_key}" > ./secret.key
+
 #install docker
 
 sudo apt-get update 
@@ -34,7 +36,11 @@ sudo apt-get install -y awscli
 
 sudo $(aws ecr get-login --no-include-email --region ${aws_region})
 
+#tag image
+
 sudo docker tag ${app_id}:${image_tag} ${aws_account_id}.dkr.ecr.${aws_region}.amazonaws.com/${app_id}:${image_tag}
+
+#create container
 
 sudo docker-compose up -d
 
