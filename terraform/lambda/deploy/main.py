@@ -26,7 +26,7 @@ def lambda_handler(event, context):
 
         ec2 = boto3.client('ec2') 
         resp = ec2.describe_instances(Filters=[
-            {'Name':'tag:App','Values':['semantive']},
+            {'Name':'tag:App','Values':[app]},
             {'Name':'tag:AppVer','Values':[app_ver]}
         ])
 
@@ -36,6 +36,7 @@ def lambda_handler(event, context):
         err = ""
         out = ""
         commands = [
+            "sudo $(aws ecr get-login --no-include-email --region {0})".format(aws_region),
             "sudo docker pull {0}.dkr.ecr.{1}.amazonaws.com/{2}:latest".format(account_id, aws_region, app_id),
             "sudo docker tag {0}.dkr.ecr.{1}.amazonaws.com/{2}:latest semantive:latest".format(account_id, aws_region, app_id),
             "cd /tmp && sudo docker-compose up -d"
@@ -48,20 +49,21 @@ def lambda_handler(event, context):
                 print("Connect to", ip)
                 try:
                     c.connect(hostname = ip, username = "ubuntu", pkey = k)
-                    print("Run docker-compose")
                     for command in commands:
+                        print(command)
                         stdin, stdout, stderr = c.exec_command(command)
-                        out += stdout.read().decode("utf-8")
-                        out += stderr.read().decode("utf-8")
+                        out1 = stdout.read().decode("utf-8")
+                        out1 += stderr.read().decode("utf-8")
+                        print(out1)
+                        out += out1
                 except Exception as e:
-                    out = ""
-                    err = str(e) 
+                    err = str(e)
+                    failed = True
                 if out:
                     print(out)
                 if err:
                     print(err)
-                    failed = True
-                    break
+                if failed: break
             if failed: break   
     except Exception as e:
         err = str(e)
@@ -69,7 +71,9 @@ def lambda_handler(event, context):
 
     codep = boto3.client('codepipeline')
     if failed:
+        print("Failed:",err)
         codep.put_job_failure_result(jobId=job_id, failureDetails={'type':'JobFailed','message':err})
     else:
+        print("Success:",out)
         codep.put_job_success_result(jobId=job_id)
 

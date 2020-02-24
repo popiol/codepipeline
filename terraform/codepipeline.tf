@@ -56,10 +56,28 @@ resource "aws_codepipeline" "main" {
 			owner = "AWS"
 			provider = "Lambda"
 			input_artifacts = ["build_output"]
+			output_artifacts = ["deploy_output"]
 			version = "1"
 
 			configuration = {
 				FunctionName = "${var.app_id}_deploy"
+			}
+		}
+	}
+
+	stage {
+		name = "Smoke_Test"
+
+		action {
+			name = "Smoke_Test"
+			category = "Invoke"
+			owner = "AWS"
+			provider = "Lambda"
+			input_artifacts = ["deploy_output"]
+			version = "1"
+
+			configuration = {
+				FunctionName = "${var.app_id}_smoketest"
 			}
 		}
 	}
@@ -85,12 +103,6 @@ provider "github" {
 	token = var.github_token
 	organization = "popiol"
 }
-
-
-#resource "github_repository" "main" {
-#	name = var.app_id
-#	private = true
-#}
 
 resource "github_repository_webhook" "main" {
 	#repository = github_repository.main.name
