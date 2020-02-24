@@ -1,24 +1,21 @@
 resource "aws_iam_role" "ec2_role" {
-	name = "${var.app_id}_ec2_role"
-	path = "/${var.app}/${var.app_ver}/"
-
-	assume_role_policy = <<EOF
-{
-	"Version": "2012-10-17",
-	"Statement": [
-		{
-			"Action": "sts:AssumeRole",
-			"Principal": {
-				"Service": "ec2.amazonaws.com"
-			},
-			"Effect": "Allow",
-			"Sid": ""
-		}
-	]
-}
-EOF
-
+	name = "${var.app_id}_ec2"
+	assume_role_policy = data.aws_iam_policy_document.ec2role_doc.json
 	tags = var.tags
+}
+
+data "aws_iam_policy_document" "ec2role_doc" {
+	statement {
+		actions = [
+			"sts:AssumeRole"
+		]
+		principals {
+			type = "Service"
+			identifiers = [
+				"ec2.amazonaws.com",
+			]
+		}
+	}
 }
 
 resource "aws_iam_role_policy" "ec2_policy" {

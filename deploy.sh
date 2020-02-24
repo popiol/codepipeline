@@ -1,11 +1,6 @@
 #!/bin/bash
 
-current_branch=`git branch | grep '*' | cut -d ' ' -f 2`
-if [ "$current_branch" = "master" ]; then
-	app_ver="prod"
-else
-	app_ver="$current_branch"
-fi
+app_ver=`git branch | grep '*' | cut -d ' ' -f 2`
 
 cd terraform/lambda
 

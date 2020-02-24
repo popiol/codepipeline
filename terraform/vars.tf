@@ -31,6 +31,10 @@ variable "timezone" {
 }
 
 variable "keys_bucket" {
+	type = string
+}
 
+variable "github_token" {
+	type = string
 }
 
