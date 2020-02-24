@@ -28,11 +28,9 @@ def lambda_handler(event, context):
             ip = inst['PrivateIpAddress']
             logs.append("Connect to {0}".format(ip))
             c.connect(hostname = ip, username = "ubuntu", pkey = k)
-            logs.append("Go to /tmp")
-            c.exec_command("cd /tmp")
             logs.append("Run docker-compose")
-            stdin, stdout, stderr = c.exec_command("sudo docker-compose up -d")
-            logs.append(stdout.read())
-            logs.append(stderr.read())
+            stdin, stdout, stderr = c.exec_command("cd /tmp && sudo docker-compose up -d")
+            logs.append(stdout.read().decode("utf-8"))
+            logs.append(stderr.read().decode("utf-8"))
             
     return logs

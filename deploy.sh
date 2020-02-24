@@ -8,7 +8,7 @@ do
 	rm $fun.zip
 	cd $fun
 	cp lib.zip ../$fun.zip
-	zip -r ../$fun.zip *py
+	zip ../$fun.zip *py
 	cd ..
 done
 
