@@ -20,9 +20,9 @@ resource "aws_codepipeline" "main" {
 			output_artifacts = ["source_output"]
 
 			configuration = {
-				Owner = "popiol"
+				Owner = var.github_user
 				Branch = var.app_ver
-				Repo = "semantive"
+				Repo = var.github_repo
 				PollForSourceChanges = "false"
 				OAuthToken = var.github_token
 			}
@@ -94,7 +94,7 @@ provider "github" {
 
 resource "github_repository_webhook" "main" {
 	#repository = github_repository.main.name
-	repository = "semantive"
+	repository = var.github_repo
 
 	configuration {
 		url = aws_codepipeline_webhook.main.url

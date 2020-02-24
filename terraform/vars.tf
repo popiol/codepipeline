@@ -38,3 +38,11 @@ variable "github_token" {
 	type = string
 }
 
+variable "github_user" {
+	type = string
+}
+
+variable "github_repo" {
+	type = string
+}
+

@@ -12,6 +12,7 @@ resource "aws_codebuild_project" "main" {
 		compute_type = "BUILD_GENERAL1_SMALL"
 		image = "aws/codebuild/standard:1.0"
 		type = "LINUX_CONTAINER"
+		privileged_mode = "true"
 
 		environment_variable {
 			name = "AWS_DEFAULT_REGION"
@@ -36,7 +37,8 @@ resource "aws_codebuild_project" "main" {
 
 	source {
 		type = "GITHUB"
-		location = "https://github.com/popiol/semantive"
+		location = "https://github.com/${var.github_user}/${var.github_repo}"
+		git_clone_depth = 1
 	}
 
 	source_version = var.app_ver
