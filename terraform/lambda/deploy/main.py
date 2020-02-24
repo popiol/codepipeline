@@ -8,10 +8,17 @@ def lambda_handler(event, context):
     try:
         keys_bucket = os.environ['keys_bucket']
         key_name = os.environ['key_name']
+        app = os.environ['app']
         app_ver = os.environ['app_ver']
+        account_id = os.environ['account_id']
+        aws_region = os.environ['aws_region']
+        app_id = app + "_" + app_ver
         print("keys_bucket =", keys_bucket)
         print("key_name =", key_name)
+        print("app =", app)
         print("app_ver =", app_ver)
+        print("account_id =", account_id)
+        print("aws_region =", aws_region)
 
         s3 = boto3.client('s3')
         s3.download_file(keys_bucket, key_name, '/tmp/semantive.pem')
@@ -27,6 +34,12 @@ def lambda_handler(event, context):
         c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         failed = False
         err = ""
+        out = ""
+        commands = [
+            "sudo docker pull {0}.dkr.ecr.{1}.amazonaws.com/{2}:latest".format(account_id, aws_region, app_id),
+            "sudo docker tag {0}.dkr.ecr.{1}.amazonaws.com/{2}:latest semantive:latest".format(account_id, aws_region, app_id),
+            "cd /tmp && sudo docker-compose up -d"
+        ]
 
         for r in resp['Reservations']:
             for inst in r['Instances']:
@@ -36,9 +49,10 @@ def lambda_handler(event, context):
                 try:
                     c.connect(hostname = ip, username = "ubuntu", pkey = k)
                     print("Run docker-compose")
-                    stdin, stdout, stderr = c.exec_command("cd /tmp && sudo docker-compose up -d")
-                    out = stdout.read().decode("utf-8")
-                    out += stderr.read().decode("utf-8")
+                    for command in commands:
+                        stdin, stdout, stderr = c.exec_command(command)
+                        out += stdout.read().decode("utf-8")
+                        out += stderr.read().decode("utf-8")
                 except Exception as e:
                     out = ""
                     err = str(e) 

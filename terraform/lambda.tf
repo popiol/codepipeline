@@ -19,7 +19,10 @@ resource "aws_lambda_function" "deploy" {
 		variables = {
 			keys_bucket = var.keys_bucket
 			key_name = "${var.app}/${var.app_ver}/semantive.pem"
+			app = var.app
 			app_ver = var.app_ver
+			account_id = data.aws_caller_identity.current.account_id
+			aws_region = var.aws_region
 		}
 	}
 }

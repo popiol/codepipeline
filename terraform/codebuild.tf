@@ -1,6 +1,6 @@
 resource "aws_codebuild_project" "main" {
 	name = var.app_id
-	build_timeout = "5"
+	build_timeout = "30"
 	service_role = aws_iam_role.codebuild.arn
 	tags = var.tags
 
