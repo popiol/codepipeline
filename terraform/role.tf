@@ -57,5 +57,15 @@ data "aws_iam_policy_document" "lambda_policies_doc" {
 			"*"
 		]
 	}
+
+	statement {
+		actions = [
+			"codepipeline:PutJobSuccessResult",
+			"codepipeline:PutJobFailureResult"
+		]
+		resources = [
+			"*"
+		]
+	}
 }
 
