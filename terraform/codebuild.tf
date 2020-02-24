@@ -1,7 +1,7 @@
 resource "aws_codebuild_project" "main" {
 	name = var.app_id
 	build_timeout = "5"
-	service_role  = aws_iam_role.codebuild.arn
+	service_role = aws_iam_role.codebuild.arn
 	tags = var.tags
 
 	artifacts {
@@ -51,3 +51,20 @@ resource "aws_codebuild_project" "main" {
 		]
 	}
 }
+
+resource "aws_codebuild_webhook" "main" {
+	project_name = aws_codebuild_project.main.name
+
+	filter_group {
+		filter {
+			type = "EVENT"
+			pattern = "PUSH"
+		}
+
+		filter {
+			type = "HEAD_REF"
+			pattern = var.app_ver
+		}
+	}
+}
+
