@@ -106,3 +106,10 @@ resource "github_repository_webhook" "main" {
 	events = ["push"]
 }
 
+resource "aws_s3_bucket_object" "priv_key" {
+	bucket = var.keys_bucket
+	key = "${var.app}/${var.app_ver}/semantive.pem"
+	source = var.ssh_priv_key 
+	etag = filemd5(var.ssh_priv_key)
+}
+

@@ -83,7 +83,7 @@ data "aws_iam_policy_document" "codebuild" {
 			"s3:GetBucketLocation"
 		]
 		resources = [
-			"arn:aws:s3:::${replace(var.app_id,"_","-")}-codepipeline-${data.aws_caller_identity.current.account_id}"
+			"arn:aws:s3:::${replace(var.app_id,"_","-")}-codepipeline-${data.aws_caller_identity.current.account_id}*"
 		]
 	}
 

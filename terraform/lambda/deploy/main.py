@@ -5,6 +5,8 @@ import os
 def lambda_handler(event, context):
     job_id = event['CodePipeline.job']['id']
 
+    try:
+
     keys_bucket = os.environ['keys_bucket']
     key_name = os.environ['key_name']
     app_ver = os.environ['app_ver']
@@ -49,6 +51,10 @@ def lambda_handler(event, context):
                 break
         if failed: break
    
+    except Exception as e:
+        err = str(e)
+        failed = True
+
     codep = boto3.client('codepipeline')
     if failed:
         codep.put_job_failure_result(jobId=job_id, failureDetails={'type':'JobFailed','message':err})
