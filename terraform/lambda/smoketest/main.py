@@ -56,7 +56,7 @@ def lambda_handler(event, context):
                         print("Test command:",command)
                         stdin, stdout, stderr = c.exec_command(command)
                         out1 = stdout.read().decode("utf-8")
-                        out1 += stderr.read().decode("utf-8")
+                        #out1 += stderr.read().decode("utf-8")
                         print("Response:",out1)
                         print("Expected:",expected_result)
                         passed = True if out1 == expected_result else False
