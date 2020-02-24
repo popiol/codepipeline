@@ -3,13 +3,16 @@ data "template_cloudinit_config" "init" {
 	base64_encode = true
 
 	part {
-		filename = "kube_init.sh"
+		filename = "ec2_init.sh"
 		content_type = "text/x-shellscript"
-		content = templatefile("${path.module}/../config/kube_init.sh", {
+		content = templatefile("${path.module}/../config/ec2_init.sh", {
 			vimrc: file("${path.module}/../config/vimrc.local"),
 			timezone: var.timezone,
 			docker_compose: file("${path.module}/../docker-compose.yml"),
-			aws_region: var.aws_region
+			aws_region: var.aws_region,
+			aws_account_id: data.aws_caller_identity.current.account_id,
+			image_tag: "latest", 
+			app_id: var.app_id
 		})
 	}
 }

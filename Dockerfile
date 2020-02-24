@@ -19,11 +19,14 @@ RUN echo "deb https://dl.bintray.com/sbt/debian /" \
 RUN curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | apt-key add
 
 RUN apt update && apt install -y \
-sbt openjdk-8-jdk
+sbt openjdk-8-jdk unzip
 
 COPY . /app
 
 WORKDIR /app
+
+RUN cd cassandra/cassandra-crud-rest &&
+	sbt dist
 
 EXPOSE 9000
 
