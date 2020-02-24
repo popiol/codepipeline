@@ -27,6 +27,44 @@ resource "aws_iam_role_policy" "codebuild_policy" {
 data "aws_iam_policy_document" "codebuild" {
 	statement {
 		actions = [
+			"ec2:CreateNetworkInterface",
+			"ec2:DescribeDhcpOptions",
+			"ec2:DescribeNetworkInterfaces",
+			"ec2:DeleteNetworkInterface",
+			"ec2:DescribeSubnets",
+			"ec2:DescribeSecurityGroups",
+			"ec2:DescribeVpcs"
+		]
+		resources = [
+			"*"
+		]
+	}
+
+	statement {
+		actions = [
+			"ec2:CreateNetworkInterfacePermission"
+		]
+		resources = [
+			"arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:network-interface/*"
+		]
+		condition {
+			test = "StringEquals"
+			variable = "ec2:Subnet"
+			values = [
+				aws_subnet.subnet2.arn
+			]
+		}
+		condition {
+			test = "StringEquals"
+			variable = "ec2:AuthorizedService"
+			values = [
+				"codebuild.amazonaws.com"
+			]
+		}
+	}
+
+	statement {
+		actions = [
 			"logs:CreateLogGroup",
 			"logs:CreateLogStream",
 			"logs:PutLogEvents"
@@ -45,7 +83,7 @@ data "aws_iam_policy_document" "codebuild" {
 			"s3:GetBucketLocation"
 		]
 		resources = [
-			"arn:aws:s3:::codepipeline*"
+			"arn:aws:s3:::codepipeline-${var.aws_region}-*"
 		]
 	}
 
@@ -57,23 +95,7 @@ data "aws_iam_policy_document" "codebuild" {
 			"codebuild:BatchPutTestCases"
 		]
 		resources = [
-			"arn:aws:codebuild:*/${var.app}-*"
-		]
-	}
-
-	statement {
-		actions = [
-			"ec2:CreateNetworkInterface",
-			"ec2:DescribeDhcpOptions",
-			"ec2:DescribeNetworkInterfaces",
-			"ec2:DeleteNetworkInterface",
-			"ec2:DescribeSubnets",
-			"ec2:DescribeSecurityGroups",
-			"ec2:DescribeVpcs",
-			"ec2:CreateNetworkInterfacePermission"
-		]
-		resources = [
-			"*"
+			"arn:aws:codebuild:${var.aws_region}:${data.aws_caller_identity.current.account_id}:report-group/${var.app}-*"
 		]
 	}
 
