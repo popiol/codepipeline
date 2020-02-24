@@ -64,3 +64,45 @@ resource "aws_codepipeline" "main" {
 		}
 	}
 }
+
+resource "aws_codepipeline_webhook" "main" {
+	name = var.app_id
+	authentication = "GITHUB_HMAC"
+	target_action = "Source"
+	target_pipeline = aws_codepipeline.main.name
+
+	authentication_configuration {
+		secret_token = var.github_token
+	}
+
+	filter {
+		json_path = "$.ref"
+		match_equals = "refs/heads/{Branch}"
+	}
+}
+
+provider "github" {
+	token = var.github_token
+	organization = "popiol"
+}
+
+
+#resource "github_repository" "main" {
+#	name = var.app_id
+#	private = true
+#}
+
+resource "github_repository_webhook" "main" {
+	#repository = github_repository.main.name
+	repository = "semantive"
+
+	configuration {
+		url = aws_codepipeline_webhook.main.url
+		content_type = "json"
+		insecure_ssl = true
+		secret = var.github_token
+	}
+
+	events = ["push"]
+}
+
