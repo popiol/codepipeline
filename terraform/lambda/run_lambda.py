@@ -1,5 +1,6 @@
 import os
 import sys
+import importlib
 
 if len(sys.argv) < 2:
     print("Missing argument. Usage " + os.path.basename(argv[0]) + " <function_name>")
@@ -17,7 +18,7 @@ app_id = params['app_id']
 fun_name = sys.argv[1]
 full_name = app_id + '_' + fun_name
 
-import get_quotes.main as fun
+fun = importlib.import_module(fun_name+".main")
 
 class Struct:
     def __init__(self, entries):

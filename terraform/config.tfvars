@@ -6,3 +6,4 @@ app_ver="prod"
 tags={"App":"semantive","AppStage":"prod"}
 statefile_bucket="popiol.state-files"
 timezone="Europe/Warsaw"
+keys_bucket="popiol.keys"

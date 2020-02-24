@@ -30,3 +30,7 @@ variable "timezone" {
 	type = string
 }
 
+variable "keys_bucket" {
+
+}
+

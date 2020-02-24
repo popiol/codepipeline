@@ -3,6 +3,7 @@ terraform/terraform.tfstate*
 terraform/config.tfvars
 terraform/.terraform/*
 terraform/lambda/*zip
+terraform/lambda/*/lib/*
 logs/*
 !logs/README.md
 
