@@ -14,18 +14,31 @@ The task has been completed using AWS services and Terraform. There is no Kubern
     `vi config.tfvars`
 
     - **`aws_region`**, the default region for the AWS account
+    
     - **`ssh_pub_key`**, the public key used for connecting to EC2 instances
+    
     - **`ssh_priv_key`**, the private key used for connecting to EC2 instances
+    
     - `app_id`, consists of application name and version
+    
     - `app`, application name
+    
     - `app_ver`, application version (branch name)
+    
     - `tags`, the default tags for AWS resources
+    
     - **`statefile_bucket`**, name of an existing bucket where the state file is going to be stored
+    
     - `timezone`, Time zone used on EC2 instances
+    
     - **`keys_bucket`**, name of an existing bucket where the state file is going to be stored
+    
     - `github_token`, token used for connecting to github repository
+    
     - `github_user`, Github user name
+    
     - `github_repo`, Github repo name
+    
     - `crud_rest_key`, secret key used by the cassandra-crud-rest app
 
     You only need to set the parameters in bold.
