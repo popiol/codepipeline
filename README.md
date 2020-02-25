@@ -17,13 +17,16 @@ The task has been completed using AWS services and Terraform. There is no Kubern
   - `app`, application name
   - `app_ver`, application version (branch name)
   - `tags`, the default tags for AWS resources
-  - `statefile_bucket`, name of an existing bucket where the state file is going to be stored
+  - `*statefile_bucket*`, name of an existing bucket where the state file is going to be stored
   - `timezone`, Time zone used on EC2 instances
-  - `keys_bucket`, name of an existing bucket where the state file is going to be stored
+  - `*keys_bucket*`, name of an existing bucket where the state file is going to be stored
   - `github_token`, token used for connecting to github repository
   - `github_user`, Github user name
   - `github_repo`, Github repo name
   - `crud_rest_key`, secret key used by the cassandra-crud-rest app
+  
+  You only need to set the parameters in bold.
+  
 1. Go to the base directory and run `./deploy.sh`
 
 This will start EC2 istance and configue CodePipeline with the following stages: Source, Build, Deploy, Smoke Test.
