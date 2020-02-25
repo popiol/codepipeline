@@ -53,3 +53,5 @@ This stage is implemented similarly to deployment. The Lambda function executes 
 
 - Secrets could be kept in secure storage such as AWS Secret Manager
 - Scaling could be handled by ELB / Auto Scaling or by an orchestration system such as Kubernetes
+- Unit tests should be executed as part of the pipeline, after smoke tests
+- For the release branch, the pipeline could have additional step of merging changes into the master branch after manual approval
