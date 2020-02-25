@@ -8,11 +8,11 @@ The task has been completed using AWS services and Terraform. There is no Kubern
 
 1. Clone the repo to a machine with access to the target AWS account
 1. Go to terraform directory and set all neccesarry variables:
-    
+
     `cp config.tfvars.template config.tfvars`
-    
+
     `vi config.tfvars`
-    
+
     - **`aws_region`**, the default region for the AWS account
     - **`ssh_pub_key`**, the public key used for connecting to EC2 instances
     - **`ssh_priv_key`**, the private key used for connecting to EC2 instances
@@ -27,9 +27,9 @@ The task has been completed using AWS services and Terraform. There is no Kubern
     - `github_user`, Github user name
     - `github_repo`, Github repo name
     - `crud_rest_key`, secret key used by the cassandra-crud-rest app
-    
+
     You only need to set the parameters in bold.
-    
+
 1. Go to the base directory and run `./deploy.sh`
 
 This will start EC2 istance and configue CodePipeline with the following stages: Source, Build, Deploy, Smoke Test.
