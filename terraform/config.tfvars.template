@@ -1,9 +1,10 @@
 aws_region=""
 ssh_pub_key="~/.ssh/id_rsa.pub"
-app_id="semantive_"
+ssh_priv_key="~/.ssh/id_rsa"
+app_id="semantive_master"
 app="semantive"
-app_ver=""
-tags={"App":"semantive","AppStage":""}
+app_ver="master"
+tags={"App":"semantive","AppStage":"master"}
 statefile_bucket=""
 timezone="Europe/Warsaw"
 keys_bucket=""
