@@ -31,8 +31,14 @@ The task has been completed using AWS services and Terraform. There is no Kubern
     You only need to set the parameters in bold.
 
 1. Go to the base directory and run `./deploy.sh`
-
-This will start EC2 istance and configue CodePipeline with the following stages: Source, Build, Deploy, Smoke Test.
+1. Go to CodePipeline console and start the first execution of the pipeline manually
 
 ## Source
 
+The pipeline will be triggered automatically every time any changes are pushed to the repo. This is achieved with Github webhooks.
+
+## Build
+
+This stage is implemented with CodeBuild and configured in buildspec.yml file. It starts temporary instance and build the docker image based on Dockerfile and docker-compose.yml files. The image is stored in AWS ECR.
+
+##
