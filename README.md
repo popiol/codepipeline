@@ -8,8 +8,11 @@ The task has been completed using AWS services and Terraform. There is no Kubern
 
 1. Clone the repo to a machine with access to the target AWS account
 1. Go to terraform directory and set all neccesarry variables:
-  <pre>cp config.tfvars.template config.tfvars
-vi config.tfvars</pre>
+
+  `cp config.tfvars.template config.tfvars`
+  
+  `vi config.tfvars`
+  
   - **`aws_region`**, the default region for the AWS account
   - **`ssh_pub_key`**, the public key used for connecting to EC2 instances
   - **`ssh_priv_key`**, the private key used for connecting to EC2 instances
