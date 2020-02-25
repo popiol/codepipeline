@@ -48,3 +48,8 @@ Deployment is handled by Lambda function, which finds the right EC2 instances by
 ## Smoke test
 
 This stage is implemented similarly to deployment. The Lambda function executes several requests with the `curl` command and verifies the results.
+
+## Possible enhancements
+
+- Secrets could be kept in secure storage such as AWS Secret Manager
+- Scaling could be handled by ELB / Auto Scaling or by an orchestration system such as Kubernetes
