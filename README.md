@@ -43,7 +43,7 @@ This stage is implemented with CodeBuild and configured in buildspec.yml file. I
 
 ## Deploy
 
-Deployment is handled by Lambda function, which finds the right EC2 instances by tags, connects to them via ssh (paramiko library), and executes deployment commands. It involves pulling the latest docker image and starting container with docker-compose.
+Deployment is handled by Lambda function, which finds the right EC2 instances by tags, connects to them via ssh, and executes deployment commands. It involves pulling the latest docker image and starting container with docker-compose.
 
 ## Smoke test
 
