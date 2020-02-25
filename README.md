@@ -10,7 +10,7 @@ The task has been completed using AWS services and Terraform. There is no Kubern
 1. Go to terraform directory and set all necessary variables:
 
     `cp config.tfvars.template config.tfvars`
-    
+    
     `vi config.tfvars`
 
     - **`aws_region`**, the default region for the AWS account
