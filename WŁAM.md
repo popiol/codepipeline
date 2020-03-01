@@ -1,1 +1,0 @@
-github_token="7a7bbc396ea923fdfcd13ae90f61e8c6c7bad932" github_user="popiol"
